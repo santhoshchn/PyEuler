@@ -9,6 +9,5 @@ for i in xrange(100,1000):
         product = i*j
         if str(product) == str(product)[::-1] and product > max:
             max = product
-
 print max
 
