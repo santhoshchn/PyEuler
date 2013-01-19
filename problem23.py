@@ -1,23 +1,21 @@
-from math import factorial
-x = list(range(10))
-i = 1000000-1
 
 
-# x.insert(2, x.pop(third+2))
-periods = [(factorial(len(x)-z))/(len(x)-z) for z in range(len(x))]
+def divisors(n):
+    sum = 1
+    for i in xrange(2, int(n**0.5) + 1):
+        if n % i == 0:
+            sum += i + n/i
+    if int(n**0.5) == n**0.5:
+        sum -= n**0.5
+    return sum
 
-def shiftGen(n, periodList, shifts = [], step = [], count = 0):
-    if shifts == [] or step == []:
-        step = shifts = [0] * len(periodList)
-    shifts = zip(step, periodList)
-    shifts = map(lambda(x,y): x*y, shifts)
-    step[count] = (n - sum(shifts))//periodList[count]
-    if count == len(periodList) - 1:
-        return step
-    return shiftGen(n, periodList, shifts, step,  count + 1)
-
-shifts = shiftGen(i, periods)
-print shifts
-for n,j in enumerate(x):
-    x.insert(n, str(x.pop(shifts[n]+n)))
-print ''.join(x)
+upperLimit = 28123
+naSum = 0
+abundantNumbers = set()
+for i in xrange(1, upperLimit):
+    if divisors(i) > i:
+        abundantNumbers.add(i)
+    if not any((i-x in abundantNumbers) for x in abundantNumbers):
+        naSum += i
+print naSum
+        
